@@ -6,22 +6,22 @@ Inputs:
 
 Throughput
  - if requested to read files (with args indicating index/file name and/or decryption key), send file
-   to decryptor
+   to cipher
 
 Output:
  - return file contents as a String
  - return a list of all the files
 
 Overall design:
- - main method read user input and send request to filehandler
- - filehandler send request to file reader (with/without args depending on what was requested from main)
- - file reader send files to decryptor (with or without unique key) or send back list of files
- - filehandler return what the file reader returned
- - main output what the filehandler returned
+ - userInterface reads user input and send request to programControl
+ - programControl sends request to fileHandler (with/without args depending on what was requested from userInterface)
+ - fileHandler send files to cipher (with or without unique key) or send back list of files
+ - programControl return what the fileHandler returned
+ - userInterface outputs what the programControl returned
 
 UML for file reader:
 
-fileReader
+fileHandler
 ------------
 -content:String
 -files:String[]
