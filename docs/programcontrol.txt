@@ -1,0 +1,8 @@
+UML -
+Programcontrol
+--------------
+-fileName: String
+-key: String
+--------------
++fetchFiles: String
++fetchFile: String
