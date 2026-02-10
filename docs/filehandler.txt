@@ -1,0 +1,34 @@
+Software design & file handler plan
+
+Inputs:
+ - Request to read files (given index/file name)
+ - Request to file with no args
+
+Throughput
+ - if requested to read files (with args indicating index/file name and/or decryption key), send file
+   to decryptor
+
+Output:
+ - return file contents as a String
+ - return a list of all the files
+
+Overall design:
+ - main method read user input and send request to filehandler
+ - filehandler send request to file reader (with/without args depending on what was requested from main)
+ - file reader send files to decryptor (with or without unique key) or send back list of files
+ - filehandler return what the file reader returned
+ - main output what the filehandler returned
+
+UML for file reader:
+
+fileReader
+------------
+-content:String
+-files:String[]
+---------------
++readFile():String[]
++readFile(String file):String
++readFile(String file, String key):String
+
+Tests:
+
