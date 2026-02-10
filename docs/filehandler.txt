@@ -19,16 +19,17 @@ Overall design:
  - programControl return what the fileHandler returned
  - userInterface outputs what the programControl returned
 
-UML for file reader:
+UML for fileHandler:
 
 fileHandler
-------------
--content:String
--files:String[]
----------------
+-------------------------
 +readFile():String[]
 +readFile(String file):String
 +readFile(String file, String key):String
 
 Tests:
-
+readFile(), return String[], Program should return a String array of all files.
+readFile("filea.txt"), return (String content of file), Program should return a String of the contents of the file.
+readFile("notAnActualFile.txt"), return exit & "Error: File cannot be found or does not exist", Program should exit and print the error statement.
+readFile("filea.txt", "skjhakhdkfgdjk"), return contents of file a as a String, Program should return contents of filea deciphered with the given key.
+readFile("notAnActualFile.txt", "skjhakhdkfgdjk"), return return exit & "Error: File cannot be found or does not exist", Program should exit and print the error statement.
