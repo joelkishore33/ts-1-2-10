@@ -18,8 +18,5 @@ public class TopSecret {
         catch(Exception e){
             System.out.println("An error occured." + e.getMessage());
         }
-        else{
-            throw new IllegalArgumentException("Invalid number of arguments provided");
-        }
     }
 }
