@@ -31,7 +31,7 @@ public class ProgramControl {
         }
         catch (NumberFormatException e) {
             text = fileHandler.readFile(fileName);
-            if(text.endsWith("txt"))
+            if(fileName.endsWith("txt"))
                 return text;
 
             return cipher.decipher(text);
@@ -53,7 +53,7 @@ public class ProgramControl {
         }
         catch (NumberFormatException e) {
             text = fileHandler.readFile(fileName);
-            if (text.endsWith("txt"))
+            if (fileName.endsWith("txt"))
                 return text;
 
             cipher.getAltKey(key);

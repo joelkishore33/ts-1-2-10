@@ -44,17 +44,26 @@ class ProgramControlTest {
     void testFetchFile_OneArg() throws FileNotFoundException {
         String fileName = "test.txt";
         when(fileHandler.readFile(fileName)).thenReturn("Deciphered File Content");
-        assertEquals("Ciphered File Content", programControl.fetchFile(fileName));
+        assertEquals("Deciphered File Content", programControl.fetchFile(fileName));
+
+        verify(fileHandler).readFile(fileName);
+    }
+
+    @Test
+    void testFetchFile_OneArgCip() throws FileNotFoundException {
+        String fileName = "test.cip";
+        when(fileHandler.readFile(fileName)).thenReturn("Ciphered File Content");
+        when(cipher.decipher("Ciphered File Content")).thenReturn("Deciphered File Content");
+        assertEquals("Deciphered File Content", programControl.fetchFile(fileName));
 
         verify(fileHandler).readFile(fileName);
         verify(cipher).decipher("Ciphered File Content");
     }
 
-
     @Test
     void testFetchFile_OneArgIntTxt() throws FileNotFoundException {
         String fileName = "1";
-        String[] fileList = {"file0.txt", "file1.dat"};
+        String[] fileList = {"file0.txt", "file1.cip"};
         when(fileHandler.readFile()).thenReturn(fileList);
 
         when(fileHandler.readFile(1)).thenReturn("Deciphered File Content");
@@ -65,15 +74,15 @@ class ProgramControlTest {
 
     @Test
     void testFetchFile_OneArgIntCip() throws FileNotFoundException {
-        String fileName = "2";
-        String[] fileList = {"file0.txt", "file1.dat"};
+        String fileName = "1";
+        String[] fileList = {"file1.cip"};
         when(fileHandler.readFile()).thenReturn(fileList);
 
-        when(fileHandler.readFile(2)).thenReturn("Ciphered File Content");
+        when(fileHandler.readFile(1)).thenReturn("Ciphered File Content");
         when(cipher.decipher("Ciphered File Content")).thenReturn("Deciphered File Content");
         assertEquals("Deciphered File Content", programControl.fetchFile(fileName));
 
-        verify(fileHandler).readFile(2);
+        verify(fileHandler).readFile(1);
         verify(cipher).decipher("Ciphered File Content");
     }
 
@@ -81,14 +90,6 @@ class ProgramControlTest {
     void testFetchFile_OneArgNull() throws FileNotFoundException {
         when(fileHandler.readFile(null)).thenThrow(new FileNotFoundException());
         assertThrows(FileNotFoundException.class, () -> programControl.fetchFile(null));
-    }
-
-    @Test
-    void testFetchFile_TwoArgsNullKey() throws FileNotFoundException {
-        String fileName = "test.txt";
-        when(fileHandler.readFile(fileName)).thenReturn("Ciphered File Content");
-        when(cipher.decipher("Ciphered File Content")).thenThrow(new IllegalArgumentException());
-        assertThrows(IllegalArgumentException.class, () -> programControl.fetchFile(fileName, null));
     }
 
     @Test
@@ -101,6 +102,16 @@ class ProgramControlTest {
     @Test
     void testFetchFile_BothArgs() throws FileNotFoundException {
         String fileName = "test.txt";
+        String key = "bcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890a";
+        when(fileHandler.readFile(fileName)).thenReturn("Deciphered File Content");
+        assertEquals("Deciphered File Content", programControl.fetchFile(fileName, key));
+
+        verify(fileHandler).readFile(fileName);
+    }
+
+    @Test
+    void testFetchFile_BothArgsCip() throws FileNotFoundException {
+        String fileName = "test.cip";
         String key = "bcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890a";
         when(fileHandler.readFile(fileName)).thenReturn("Ciphered File Content");
         when(cipher.decipher("Ciphered File Content")).thenReturn("Deciphered File Content");
