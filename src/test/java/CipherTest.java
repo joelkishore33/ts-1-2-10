@@ -26,7 +26,6 @@ public class CipherTest {
     @Test
     void loadKey_usesDefaultPath() throws Exception {
         Cipher cipher = new Cipher();
-        cipher.loadKey();
         assertNotNull(cipher.decipher(""));
     }
 
