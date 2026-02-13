@@ -1,5 +1,7 @@
 import org.junit.jupiter.api.*;
 
+import java.io.FileNotFoundException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserInterfaceTest {
@@ -27,7 +29,7 @@ class UserInterfaceTest {
     }
 
     @Test
-    void transferFileSelected() {
+    void transferFileSelected() throws FileNotFoundException {
         String content = "Carnivore, later renamed DCS1000, was a system implemented by the Federal Bureau of Investigation (FBI) that was\n" +
                 "designed to monitor email and electronic communications. It used a customizable packet sniffer that could monitor all\n" +
                 "of a target user's Internet traffic. Carnivore was implemented in October 1997. By 2005 it had been replaced with\n" +
@@ -36,7 +38,7 @@ class UserInterfaceTest {
     }
 
     @Test
-    void transferFileSelectedWithAltKey() {
+    void transferFileSelectedWithAltKey() throws FileNotFoundException {
         String content = "Dbsojwpsf, mbufs sfobnfe EDT2aaa, xbt b tztufn jnqmfnfoufe cz uif Gfefsbm Cvsfbv pg Jowftujhbujpo (GCJ) uibu xbt\n" +
                 "eftjhofe up npojups fnbjm boe fmfduspojd dpnnvojdbujpot. Ju vtfe b dvtupnjAbcmf qbdlfu tojggfs uibu dpvme npojups bmm\n" +
                 "pg b ubshfu vtfs't Joufsofu usbggjd. Dbsojwpsf xbt jnqmfnfoufe jo Pdupcfs 2008. Cz 3aa6 ju ibe cffo sfqmbdfe xjui\n" +

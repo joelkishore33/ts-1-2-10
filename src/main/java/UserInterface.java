@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 
 public class UserInterface {
     private String fileSelected;
@@ -22,10 +23,10 @@ public class UserInterface {
             altKey = input[1];
         }
     }
-    public String transferFileSelected(){
+    public String transferFileSelected() throws FileNotFoundException {
         return programcontrol.fetchFile(fileSelected);
     }
-    public String transferFileSelectedWithAltKey(){
+    public String transferFileSelectedWithAltKey() throws FileNotFoundException {
         return programcontrol.fetchFile(fileSelected,altKey);
     }
 }
