@@ -18,12 +18,26 @@ public class ProgramControl {
     }
 
     public String fetchFile(String fileName) throws FileNotFoundException {
-        String text = fileHandler.readFile(fileName);
+        String text;
+        try{
+            int number = Integer.parseInt(fileHandler.readFile(fileName));
+            text = fileHandler.readFile(number);
+        }
+        catch (NumberFormatException e){
+            text = fileHandler.readFile(fileName);
+        }
         return cipher.decipher(text);
     }
 
     public String fetchFile(String fileName, String key) throws FileNotFoundException {
-        String text = fileHandler.readFile(fileName);
+        String text;
+        try{
+            int number = Integer.parseInt(fileHandler.readFile(fileName));
+            text = fileHandler.readFile(number);
+        }
+        catch (NumberFormatException e){
+            text = fileHandler.readFile(fileName);
+        }
         return cipher.decipher(text, key);
     }
 }
