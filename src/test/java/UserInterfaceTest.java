@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.*;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,6 +36,12 @@ class UserInterfaceTest {
                 "of a target user's Internet traffic. Carnivore was implemented in October 1997. By 2005 it had been replaced with\n" +
                 "improved commercial software.";
         assertEquals(content, testInterface.transferFileSelected());
+    }
+    @Test
+    void transferFileSelectedwithNoArgs(){
+        String[] noArgs = new String[0];
+        testInterface = new UserInterface(noArgs);
+        Assertions.assertThrows(FileNotFoundException.class, () -> new FileInputStream("NO FILE FOUND"));
     }
 
     @Test
