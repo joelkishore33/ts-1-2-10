@@ -24,6 +24,7 @@ public class UserInterface {
             fileSelected = input[0];
         } catch(Exception e){
             System.out.println("An error occured." + e.getMessage());
+
         }
         if(input.length==2){
             altKey = input[1];
