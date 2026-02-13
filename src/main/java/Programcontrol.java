@@ -1,29 +1,30 @@
 import javax.crypto.Cipher;
+import java.io.FileNotFoundException;
 
-public class Programcontrol {
-    private Filehandler filehandler;
+public class ProgramControl {
+    private FileHandler fileHandler;
     private Cipher cipher;
 
-    public Programcontrol() {
+    public ProgramControl() {
         this(new Filehandler(), new Cipher());
     }
 
-    Programcontrol(Filehandler filehandler, Cipher cipher) {
-        this.filehandler = filehandler;
+    ProgramControl(FileHandler fileHandler, Cipher cipher) {
+        this.fileHandler = fileHandler;
         this.cipher = cipher;
     }
 
-    public String fetchFile() {
-        return filehander.readFile();
+    public String[] fetchFile() {
+        return fileHandler.readFile();
     }
 
-    public String fetchFile(String fileName) {
-        text = filehandler.readFile(fileName);
+    public String fetchFile(String fileName) throws FileNotFoundException {
+        String text = fileHandler.readFile(fileName);
         return cipher.decipher(text);
     }
 
-    public String fetchFile(String fileName, String key) {
-        text = filehandler.readFile(fileName);
+    public String fetchFile(String fileName, String key) throws FileNotFoundException {
+        String text = fileHandler.readFile(fileName);
         return cipher.decipher(text, key);
     }
 }
