@@ -29,4 +29,7 @@ public class UserInterface {
     public String transferFileSelectedWithAltKey() throws FileNotFoundException {
         return programcontrol.fetchFile(fileSelected,altKey);
     }
+    public String[] transfer(){
+        return programcontrol.fetchFile();
+    }
 }

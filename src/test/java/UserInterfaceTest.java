@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.*;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -45,4 +46,11 @@ class UserInterfaceTest {
                 "jnqspwfe dpnnfsdjbm tpguxbsf.";
         assertEquals(content, testInterface.transferFileSelectedWithAltKey());
     }
+
+    @Test
+    void transfer() {
+        String[] file = {"carnivore.cip", "carnivore.txt", "cointelpro.cip", "cointelpro.txt"};
+        assertArrayEquals(file, testInterface.transfer(), "Name of files should be the same as those in the directory \"data/\".");
+    }
+
 }
