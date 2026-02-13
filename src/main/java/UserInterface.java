@@ -3,6 +3,7 @@ import java.lang.classfile.instruction.ExceptionCatch;
 
 public class UserInterface {
     private String fileSelected;
+    private ProgramControl programControl = new ProgramControl();
 
     public String getFileSelected() {
         return fileSelected;
@@ -24,11 +25,14 @@ public class UserInterface {
                 fileSelected = input[0];
             }
         } catch(Exception e){
-            System.out.println("An error occurred." + e.getMessage());
+            System.out.println("An error occurred. " + e.getMessage());
         }
         if(input.length==2){
             altKey = input[1];
         }
+    }
+    public void setProgramControl(ProgramControl pc){
+        programcontrol=pc;
     }
     public String transferFileSelected() throws FileNotFoundException {
         return programcontrol.fetchFile(fileSelected);

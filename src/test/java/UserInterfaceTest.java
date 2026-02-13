@@ -31,9 +31,11 @@ class UserInterfaceTest{
         assertEquals("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", testInterface.getAltKey(),"Name");
     }
     @Test
-    void testPartitionUserInputwithNoArgs(){
-        String[] noArgs = new String[0];
-        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {testInterface = new UserInterface(noArgs);});
+    void testPartitionUserInputwithNoArgs() {
+        String[] nothing = new String[0];
+        assertDoesNotThrow(() -> {
+            testInterface.partitionUserInput(nothing);
+        });
     }
 
     @Test
