@@ -25,4 +25,13 @@ class UserInterfaceTest {
     void testGetAltKey() {
         assertTrue(testInterface.getAltKey().equals("abc"));
     }
+
+    @Test
+    void transferFileSelected() {
+
+    }
+
+    @Test
+    void transferFileSelectedWithAltKey() {
+    }
 }

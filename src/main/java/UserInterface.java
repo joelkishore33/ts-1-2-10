@@ -1,6 +1,15 @@
 
 public class UserInterface {
     private String fileSelected;
+
+    public String getFileSelected() {
+        return fileSelected;
+    }
+
+    public String getAltKey() {
+        return altKey;
+    }
+
     private String altKey;
     public Programcontrol programcontrol = new Programcontrol();
 
@@ -11,10 +20,10 @@ public class UserInterface {
         fileSelected = input[0];
         altKey = input[1];
     }
-    public void transferFileSelected(){
-        System.out.println(programcontrol.fetchFile(fileSelected));
+    public String transferFileSelected(){
+        return programcontrol.fetchFile(fileSelected);
     }
-    public void transferFileSelectedWithAltKey(){
-        System.out.println(programcontrol.fetchFile(fileSelected,altKey));
+    public String transferFileSelectedWithAltKey(){
+        return programcontrol.fetchFile(fileSelected,altKey);
     }
 }
