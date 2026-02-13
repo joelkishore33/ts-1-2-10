@@ -25,7 +25,8 @@ public class Cipher {
         }
         else{
             key2 = key1;
-            key1 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            String alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            key1 = alphabet.substring(0, key2.length());
         }
         scan.close();
     }

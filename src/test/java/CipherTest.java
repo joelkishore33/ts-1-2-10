@@ -1,7 +1,10 @@
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
-import java.nio.file.*;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CipherTest {
 
@@ -9,6 +12,7 @@ public class CipherTest {
         Files.createDirectories(path.getParent());
         Files.writeString(path, line1 + System.lineSeparator() + line2);
     }
+
     private static void writeOneLineKeyFile(Path path, String line1) throws IOException {
         Files.createDirectories(path.getParent());
         Files.writeString(path, line1 + System.lineSeparator());
@@ -20,15 +24,6 @@ public class CipherTest {
     }
 
     @Test
-    void loadKey_defaultPath() throws Exception {
-        Path defaultPath = Paths.get("ciphers", "key.txt");
-        writeKeyFile(defaultPath, "abcdefghij", "chajfncksi");
-        Cipher cipher = new Cipher();
-        cipher.loadKey();
-        assertEquals("abc", cipher.decipher("xyz"));
-    }
-
-    @Test
     void loadKey_usesDefaultPath() throws Exception {
         Cipher cipher = new Cipher();
         cipher.loadKey();
@@ -36,11 +31,24 @@ public class CipherTest {
     }
 
     @Test
+    void getAltKey_correctMapping() throws Exception {
+        Path keyPath = Paths.get("build", "testkey.txt");
+        writeKeyFile(keyPath, "abc", "xyz");
+
+        Cipher cipher = new Cipher();
+        cipher.getAltKey(keyPath.toString());
+
+        assertEquals("abc", cipher.decipher("xyz"));
+    }
+
+    @Test
     void getAltKey_loadsAlternateKey() throws Exception {
         Path altPath = Paths.get("build", "altkey.txt");
         writeKeyFile(altPath, "123", "789");
+
         Cipher cipher = new Cipher();
         cipher.getAltKey(altPath.toString());
+
         assertEquals("123", cipher.decipher("789"));
     }
 
@@ -74,9 +82,17 @@ public class CipherTest {
 
         Cipher cipher = new Cipher();
         cipher.getAltKey(keyPath.toString());
-
-        // '!' and ' ' are not in key2 ("xyz"), so they should remain unchanged
         assertEquals("a! b", cipher.decipher("x! y"));
+    }
+
+    @Test
+    void decipher_mixedMappedAndUnmapped_chars() throws Exception {
+        Path keyPath = Paths.get("build", "k_mixed.txt");
+        writeKeyFile(keyPath, "abc", "xyz");
+
+        Cipher cipher = new Cipher();
+        cipher.getAltKey(keyPath.toString());
+        assertEquals("a!c", cipher.decipher("x!z"));
     }
 
     @Test
@@ -87,17 +103,34 @@ public class CipherTest {
         Cipher cipher = new Cipher();
         assertThrows(java.io.FileNotFoundException.class, () -> cipher.getAltKey(keyPath.toString()));
     }
-    void getAltKey_oneLineFile_usesFallbackMapping() throws Exception {
+
+    @Test
+    void getAltKey_missingFile_throwsFileNotFoundException() {
+        Cipher cipher = new Cipher();
+        assertThrows(java.io.FileNotFoundException.class,
+                () -> cipher.getAltKey("build/definitely_not_real_key_file_12345.txt"));
+    }
+
+    @Test
+    void getAltKey_oneLineFile() throws Exception {
         Path keyPath = Paths.get("build", "k_one_line.txt");
-        // One line means: your code sets key2 = that line,
-        // and key1 = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
         writeOneLineKeyFile(keyPath, "xyz");
 
         Cipher cipher = new Cipher();
         cipher.getAltKey(keyPath.toString());
 
-        // index of 'x' in key2 ("xyz") is 0, so maps to key1.charAt(0) which is 'a'
         assertEquals("abc", cipher.decipher("xyz"));
+    }
+
+    @Test
+    void getAltKey_oneLineFile_fallback_unmappedStaysSame() throws Exception {
+        Path keyPath = Paths.get("build", "k_one_line_unmapped.txt");
+        writeOneLineKeyFile(keyPath, "xyz");
+
+        Cipher cipher = new Cipher();
+        cipher.getAltKey(keyPath.toString());
+
+        assertEquals("ab!c", cipher.decipher("xy!z"));
     }
 
     @Test
@@ -114,11 +147,6 @@ public class CipherTest {
     @Test
     void decipher_withoutLoadingKeys_throwsSomeException() {
         Cipher cipher = new Cipher();
-
-        // Ideally: IllegalStateException if you add a guard in Cipher.decipher()
-        // Right now: it will likely throw NullPointerException because key1/key2 are null.
         assertThrows(RuntimeException.class, () -> cipher.decipher("abc"));
     }
-
-
 }
