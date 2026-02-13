@@ -11,7 +11,7 @@ public class UserInterface {
     }
 
     private String altKey;
-    public Programcontrol programcontrol = new Programcontrol();
+    public ProgramControl programcontrol = new ProgramControl();
 
     public UserInterface(String[] input) {
         partitionUserInput(input);
