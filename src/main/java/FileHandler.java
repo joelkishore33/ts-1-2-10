@@ -35,15 +35,18 @@ public class FileHandler {
         return contents;
     }
 
-    public String readFile(int fileNumber) throws FileNotFoundException{
+    public String readFile(int fileNumber) throws FileNotFoundException, NullPointerException, IndexOutOfBoundsException{
         //returns the contents of the specified file
         String path = "./data";
         File directory = new File(path);
 
         String[] files = directory.list();
 
-        if(files == null || fileNumber > files.length-1){
-            return "no such file";
+        if(files == null){
+            throw new NullPointerException("Files directory is empty.");
+        }
+        if (fileNumber > files.length-1){
+            throw new IndexOutOfBoundsException("File does not exist.");
         }
         File file = new File(files[fileNumber-1]);
         Scanner readIn = new Scanner(file);
