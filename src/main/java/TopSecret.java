@@ -19,13 +19,11 @@ public class TopSecret {
                 }
                 System.out.println(output);
             }
-            if(args.length ==1){
+            else if(args.length ==1){
                 System.out.println(UI.transferFileSelected());
             }
             else if(args.length == 2){
                 System.out.println(UI.transferFileSelectedWithAltKey());
-            }else if (args.length ==0){
-                System.out.println(UI.transfer());
             }
             else{
                 System.out.println("Invalid number of arguments.");
