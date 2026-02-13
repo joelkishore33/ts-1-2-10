@@ -1,17 +1,31 @@
+
 public class UserInterface {
     private String fileSelected;
+
+    public String getFileSelected() {
+        return fileSelected;
+    }
+
+    public String getAltKey() {
+        return altKey;
+    }
+
     private String altKey;
+    public Programcontrol programcontrol = new Programcontrol();
+
     public UserInterface(String[] input) {
         partitionUserInput(input);
     }
     public void partitionUserInput(String[] input){
         fileSelected = input[0];
-        altKey = input[1];
+        if(input.length==2){
+            altKey = input[1];
+        }
     }
-    public String getFileSelected(){
-        return fileSelected;
+    public String transferFileSelected(){
+        return programcontrol.fetchFile(fileSelected);
     }
-    public String getAltKey(){
-        return altKey;
+    public String transferFileSelectedWithAltKey(){
+        return programcontrol.fetchFile(fileSelected,altKey);
     }
 }
