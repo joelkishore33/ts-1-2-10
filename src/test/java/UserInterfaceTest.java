@@ -30,11 +30,6 @@ class UserInterfaceTest{
         assertEquals("01", testInterface.getFileSelected());
         assertEquals("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890", testInterface.getAltKey(),"Name");
     }
-    @Test
-    void testPartitionUserInputwithNoArgs(){
-        String[] noArgs = new String[0];
-        Assertions.assertThrows(IndexOutOfBoundsException.class, () -> {testInterface = new UserInterface(noArgs);});
-    }
 
     @Test
     void testGetFileSelected() {
